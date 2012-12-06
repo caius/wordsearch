@@ -20,8 +20,8 @@ class Grid
 
   def to_s
     o = ""
-    width.times do |x|
-      height.times do |y|
+    width.times do |y|
+      height.times do |x|
         o << self.cell_at(x, y).value + " "
       end
       o << "\n"

@@ -11,7 +11,7 @@ class Cell
   end
 
   def value # !> method redefined; discarding old value
-    (defined?(@value) && @value) || generated_value
+    (defined?(@value) && @value.upcase) || generated_value
   end
 
   def filled?
