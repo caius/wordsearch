@@ -17,6 +17,13 @@ class Strategy
     def call
       raise NotImplementedError, "override in subclass #{self}"
     end
+
+    def place_word_at coords
+      raise ArgumentError, "Not enough co-ordinates" unless coords == (word.size - 1)
+      coords.each_with_index do |c, i|
+        c.value = word[i]
+      end
+    end
   end
 
   class Horizontal < Base
@@ -37,4 +44,24 @@ class Strategy
       end
     end
   end
+
+  class Vertical < Base
+    def call
+      raise PlaceError, "word too wide for grid" if grid.width < word.length
+      plausible = []
+
+      grid.height.times do |y|
+        grid.width.times do |x|
+          pending_cells = word.length.times.map {|i| grid.cell_at(x, (y + i)) }
+          next if pending_cells.any? {|c| c && c.filled? }
+
+          plausible << pending_cells
+        end
+      end
+
+      # Choose random location!
+      place_word_at plausible.sample
+    end
+  end
+
 end
