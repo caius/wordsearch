@@ -6,11 +6,11 @@ class Cell
     self.y = y
   end
 
-  def generated_value # !> method redefined; discarding old generated_value
+  def generated_value
     @generated_value ||= ("a".."z").to_a.sample
   end
 
-  def value # !> method redefined; discarding old value
+  def value
     (defined?(@value) && @value.upcase) || generated_value
   end
 
